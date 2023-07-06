@@ -99,10 +99,10 @@ namespace SooperLooper {
 			BigEndian
 		};
 	
-		
-		LoopFileEvent(Type tp, int inst, std::string fname, std::string returl, std::string retpath,
-			      FileFormat fmt=FormatFloat, Endian end=LittleEndian)
-			: type(tp), instance(inst), filename(fname), format(fmt), endian(end), ret_url(returl), ret_path(retpath) {}
+
+		LoopFileEvent(Type tp, int inst, std::string fname, std::string returl, std::string retpath, std::string errpath,
+									FileFormat fmt = FormatFloat, Endian end = LittleEndian)
+				: type(tp), instance(inst), filename(fname), format(fmt), endian(end), ret_url(returl), ret_path(retpath), err_path(errpath) {}
 
 		virtual ~LoopFileEvent() {}
 
@@ -112,6 +112,7 @@ namespace SooperLooper {
 		Endian           endian;
 		std::string      ret_url;
 		std::string      ret_path;
+		std::string      err_path;
 	};
 	
 	class GetParamEvent : public EventNonRT

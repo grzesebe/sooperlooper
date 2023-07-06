@@ -1385,9 +1385,9 @@ LoopControl::post_save_loop(int index, wxString fname, wxString format, wxString
 	snprintf(buf, sizeof(buf), "/sl/%d/save_loop", index);
 
 	// send request for updates
-	if (lo_send(_osc_addr, buf, "sssss", (const char *) fname.ToAscii(),
+	if (lo_send(_osc_addr, buf, "ssssss", (const char *) fname.ToAscii(),
 		    (const char *) format.ToAscii(), (const char *) endian.ToAscii(),
-		    (const char *) _our_url.c_str(), "/error") == -1) {
+		    (const char *) _our_url.c_str(), "/success", "/error") == -1) {
 		return false;
 	}
 
@@ -1403,7 +1403,7 @@ LoopControl::post_load_loop(int index, wxString fname)
 	snprintf(buf, sizeof(buf), "/sl/%d/load_loop", index);
 
 	// send request for updates
-	if (lo_send(_osc_addr, buf, "sss", (const char *) fname.ToAscii(), _our_url.c_str(), "/error") == -1) {
+	if (lo_send(_osc_addr, buf, "ssss", (const char *) fname.ToAscii(), _our_url.c_str(), "/success", "/error") == -1) {
 		return false;
 	}
 

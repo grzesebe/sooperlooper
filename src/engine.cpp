@@ -2075,12 +2075,16 @@ Engine::process_nonrt_event (EventNonRT * event)
 			if (lf_event->instance == -1 || lf_event->instance == (int)n) {
 				if (lf_event->type == LoopFileEvent::Load) {
 					if (!_instances[n]->load_loop (lf_event->filename)) {
-						_osc->send_error(lf_event->ret_url, lf_event->ret_path, "Loop Load Failed");
+						_osc->send_error(lf_event->ret_url, lf_event->err_path, "Loop Load Failed");
+					} else {
+						_osc->send_error (lf_event->ret_url, lf_event->ret_path, "Loop Load Succeeded");
 					}
 				}
 				else {
 					if (!_instances[n]->save_loop (lf_event->filename)) {
-						_osc->send_error(lf_event->ret_url, lf_event->ret_path, "Loop Save Failed");
+						_osc->send_error(lf_event->ret_url, lf_event->err_path, "Loop Save Failed");
+					} else {
+						_osc->send_error (lf_event->ret_url, lf_event->ret_path, "Loop Save Succeeded");
 					}
 				}
 			}
