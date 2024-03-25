@@ -739,7 +739,7 @@ ComponentResult		SooperLooperAU::GetProperty(	AudioUnitPropertyID inID,
     {
         
         // Look for a resource in the main bundle by name and type.
-#ifdef __x86_64__
+#if defined(__x86_64__) || defined(__aarch64__)
         CFBundleRef bundle = CFBundleGetBundleWithIdentifier( CFSTR("net.essej.audiounit.SooperLooperAU64") );
 #else
         CFBundleRef bundle = CFBundleGetBundleWithIdentifier( CFSTR("net.essej.audiounit.SooperLooperAU") );
@@ -1499,7 +1499,7 @@ ComponentResult SooperLooperAU::RestoreState(CFPropertyListRef inData)
 			_engine->load_session ("", &sess_str);
 		}
 		else {
-			//cerr << "pending restore, will use: " << sess_str << endl;
+			// cerr << "pending restore, will use: " << sess_str << endl;
 			_pending_restore = sess_str;
 		}
 	}
@@ -1520,7 +1520,12 @@ ComponentResult SooperLooperAU::RestoreState(CFPropertyListRef inData)
 		stringstream midisstr;
 		midisstr.write((const char *) plaindata, plaindatasize);
 		if (_midi_bridge) {
+            string midi_str((const char *)plaindata, plaindatasize);
+			//cerr << "loading midi bindings from: " << midi_str << endl;
 			_midi_bridge->bindings().load_bindings (midisstr);
+		}
+		else {
+			cerr << "No midibridge yet can't load midi bindings" << endl;
 		}
 
 	}
